@@ -1,4 +1,4 @@
-#include <io.h>
+#include <msp430.h>
 #include <signal.h>
 
 #include "rand.h"
