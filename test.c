@@ -30,7 +30,8 @@ void prepare_to_blink() {
 	__bis_SR_register(LPM3_bits | GIE);       // LPM3 w/ interrupt
 }
 
-interrupt(TIMERA1_VECTOR) blink_LED() {
+#pragma vector=TIMER0_A1_VECTOR
+__interrupt void blink_LED() {
 	TACCTL1 &= ~CCIFG;                        // Unset interrupt flag
 
 	if (failure)                              // Toggle LEDs
@@ -122,7 +123,7 @@ int monobit_prand() {
  * Never returns!
  */
 void fail(int code) {
-	__asm__ __volatile__("push %0" : : "r" (code));
+	//__asm__ __volatile__("push %0" : : "r" (code));
 
 	failure = 1;
 
@@ -136,6 +137,7 @@ void fail(int code) {
  * Both LEDs are lit up while testing, and one will blink once the tests are
  * done, depending on the outcome.
  */
+/*
 void main() {
 	LED_DIR |= LED_RED | LED_GREEN;
 	LED_OUT |= LED_RED | LED_GREEN;
@@ -149,3 +151,4 @@ void main() {
 	LED_OUT &= ~LED_RED;
 	prepare_to_blink();
 }
+*/
